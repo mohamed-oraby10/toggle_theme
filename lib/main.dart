@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toggle_theme/core/config/theme/theme_cubit/theme_cubit.dart';
 import 'package:toggle_theme/core/config/theme/theme_data/theme_data_dark.dart';
 import 'package:toggle_theme/core/config/theme/theme_data/theme_data_light.dart';
 
@@ -10,13 +12,20 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: getLightTheme(),
-      darkTheme: getDarkTheme(),
-      themeMode: ThemeMode.dark,
-      home: const HomeView(),
+    return BlocProvider(
+      create: (context) => ThemeCubit(),
+      child: BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, newMode) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: getLightTheme(),
+            darkTheme: getDarkTheme(),
+            themeMode: newMode,
+            home: const HomeView(),
+          );
+        },
+      ),
     );
   }
 }
@@ -42,7 +51,18 @@ class HomeView extends StatelessWidget {
             SizedBox(height: 20),
             TextField(decoration: InputDecoration(hintText: 'hint')),
             SizedBox(height: 20),
-            ElevatedButton(onPressed: () {}, child: Text('Toggle Theme')),
+            ElevatedButton(
+              onPressed: () {
+                Theme.of(context).brightness == Brightness.dark
+                    ? BlocProvider.of<ThemeCubit>(
+                        context,
+                      ).toggleTheme(ThemeMode.light)
+                    : BlocProvider.of<ThemeCubit>(
+                        context,
+                      ).toggleTheme(ThemeMode.dark);
+              },
+              child: Text('Toggle Theme'),
+            ),
           ],
         ),
       ),
