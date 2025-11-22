@@ -1,11 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:toggle_theme/core/config/theme/extensions/theme_extension.dart';
 import 'package:toggle_theme/core/config/theme/theme_cubit/theme_cubit.dart';
 import 'package:toggle_theme/core/config/theme/theme_data/theme_data_dark.dart';
 import 'package:toggle_theme/core/config/theme/theme_data/theme_data_light.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorageDirectory.web
+        : HydratedStorageDirectory((await getTemporaryDirectory()).path),
+  );
   runApp(const MyApp());
 }
 
