@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toggle_theme/core/config/theme/extensions/theme_extension.dart';
 import 'package:toggle_theme/core/config/theme/theme_cubit/theme_cubit.dart';
 import 'package:toggle_theme/core/config/theme/theme_data/theme_data_dark.dart';
 import 'package:toggle_theme/core/config/theme/theme_data/theme_data_light.dart';
@@ -53,7 +54,7 @@ class HomeView extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Theme.of(context).brightness == Brightness.dark
+                (context).isDarkMode
                     ? BlocProvider.of<ThemeCubit>(
                         context,
                       ).toggleTheme(ThemeMode.light)
