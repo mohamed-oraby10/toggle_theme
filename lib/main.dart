@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:toggle_theme/core/config/theme/app_text_styles.dart';
 import 'package:toggle_theme/core/config/theme/extensions/theme_extension.dart';
 import 'package:toggle_theme/core/config/theme/theme_cubit/theme_cubit.dart';
 import 'package:toggle_theme/core/config/theme/theme_data/theme_data_dark.dart';
@@ -28,7 +29,6 @@ class MyApp extends StatelessWidget {
         builder: (context, newMode) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
             theme: getLightTheme(),
             darkTheme: getDarkTheme(),
             themeMode: newMode,
@@ -51,7 +51,12 @@ class HomeView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Home view'),
+            Text(
+              'Hello, welcome to Home view',
+              style: AppTextStyles.headingH5.copyWith(
+                color: context.customColors.secondaryColor,
+              ),
+            ),
             SizedBox(height: 20),
             ElevatedButton(onPressed: () {}, child: Text('Enabled Button')),
             SizedBox(height: 20),
